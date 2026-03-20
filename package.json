@@ -1,0 +1,34 @@
+{
+    "name": "kill-count-tool",
+    "version": "1.0.0",
+    "description": "Simple kill counter tool for streamers",
+    "author": "yuyutti",
+    "main": "main/index.js",
+    "scripts": {
+        "build": "tsc -p electron-src",
+        "dev": "tsc -p electron-src --watch",
+        "start": "electron .",
+        "dist": "npm run build && electron-builder"
+    },
+    "build": {
+        "appId": "com.yuyutti.killcounttool",
+        "productName": "Kill Count Tool",
+        "files": [
+            "main/**/*",
+            "renderer/**/*",
+            "package.json"
+        ],
+        "win": {
+            "target": "portable",
+            "icon": "icon.ico"
+        },
+        "forceCodeSigning": false
+    },
+    "devDependencies": {
+        "electron": "^28.0.0",
+        "tailwindcss": "^3.4.19",
+        "typescript": "^5.3.0",
+        "electron-builder": "^26.8.1"
+    },
+    "dependencies": {}
+}

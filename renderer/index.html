@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>Kill Tool</title>
+    <link rel="stylesheet" href="./dist.css">
+</head>
+<body class="bg-zinc-900 text-white font-sans text-center min-h-screen flex items-center justify-center p-5">
+
+    <div class="max-w-md mx-auto">
+
+        <!-- タイトル -->
+        <h2 class="text-lg font-semibold">残りキル数</h2>
+        <h1 id="kill" class="text-4xl font-bold tracking-wide mt-2">0</h1>
+
+        <!-- 説明 -->
+        <p id="desc" class="text-xs text-zinc-400 mt-8">
+            現在のキル数から指定キル数を減らします
+        </p>
+
+        <!-- 入力UI -->
+        <div class="flex items-center justify-center gap-2 mt-3">
+
+            <button id="modeBtn" onclick="toggleMode()"
+                class="w-8 h-8 text-base bg-zinc-800 rounded-md hover:bg-zinc-600 transition">
+                -
+            </button>
+
+            <input id="input" type="text" placeholder="0"
+                class="w-28 h-7 text-center text-sm px-2 rounded-md bg-zinc-800 border border-zinc-700 focus:outline-none focus:border-blue-400" />
+
+            <span class="text-sm">キル</span>
+        </div>
+
+        <!-- 反映ボタン -->
+        <div class="mt-5">
+            <button id="applyBtn" onclick="apply()"
+                class="w-full max-w-[260px] py-2 text-sm text-white rounded-md transition 
+                disabled:opacity-40 
+                disabled:cursor-not-allowed 
+                disabled:pointer-events-none"
+            >
+                0キル削除
+            </button>
+        </div>
+
+        <!-- スパチャ換算 -->
+        <div class="mt-8 border-t border-zinc-700 pt-5">
+
+            <p class="text-xs text-zinc-400 mb-2">
+                金額からキル数を計算
+            </p>
+
+<div class="flex items-center justify-center gap-2">
+
+    <!-- 金額 -->
+    <div class="relative">
+        <input id="moneyInput" type="text" placeholder="金額"
+            class="w-24 h-7 text-center text-sm px-2 pr-6 rounded-md bg-zinc-800 border border-zinc-700 focus:outline-none focus:border-blue-400" />
+        
+        <span class="absolute right-2 top-1/2 -translate-y-1/2 text-xs text-zinc-400">
+            円
+        </span>
+    </div>
+
+    <span class="text-xs text-zinc-400">÷</span>
+
+    <!-- 単価 -->
+    <input id="rateInput" type="text" placeholder="1キルの値段"
+        class="w-24 h-7 text-center text-sm px-2 rounded-md bg-zinc-800 border border-zinc-700 focus:outline-none focus:border-blue-400" />
+
+</div>
+
+            <div class="mt-3">
+                <button id="moneyBtn" onclick="applyMoney()"
+                    class="w-full max-w-[260px] py-2 text-sm text-white rounded-md transition
+                    disabled:opacity-40 disabled:cursor-not-allowed disabled:pointer-events-none
+                    bg-blue-600 hover:bg-blue-500">
+                    キル追加
+                </button>
+            </div>
+
+        </div>
+
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>

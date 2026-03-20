@@ -1,0 +1,8 @@
+# node
+node_modules/
+
+# ビルド
+dist/
+
+# vscode
+.history/
