@@ -17,6 +17,7 @@ function getPaths() {
     return {
         storePath: (0, path_1.join)(dir, "store.json"),
         obsPath: (0, path_1.join)(dir, "kill.txt"),
+        countPath: (0, path_1.join)(dir, "killcount.txt"),
     };
 }
 const defaultData = {
@@ -24,10 +25,11 @@ const defaultData = {
     rate: 10,
 };
 function load() {
-    const { storePath, obsPath } = getPaths();
+    const { storePath, obsPath, countPath } = getPaths();
     if (!(0, fs_1.existsSync)(storePath)) {
         (0, fs_1.writeFileSync)(storePath, JSON.stringify(defaultData));
-        (0, fs_1.writeFileSync)(obsPath, String(defaultData.kill));
+        (0, fs_1.writeFileSync)(obsPath, `残り${defaultData.kill}キル`);
+        (0, fs_1.writeFileSync)(countPath, String(defaultData.kill));
         return defaultData;
     }
     try {
@@ -35,7 +37,8 @@ function load() {
         if (typeof data.rate !== "number") {
             data.rate = 10;
         }
-        (0, fs_1.writeFileSync)(obsPath, String(data.kill));
+        (0, fs_1.writeFileSync)(obsPath, `残り${data.kill}キル`);
+        (0, fs_1.writeFileSync)(countPath, String(data.kill));
         return data;
     }
     catch (_a) {
@@ -43,9 +46,10 @@ function load() {
     }
 }
 function save(data) {
-    const { storePath, obsPath } = getPaths();
+    const { storePath, obsPath, countPath } = getPaths();
     (0, fs_1.writeFileSync)(storePath, JSON.stringify(data));
-    (0, fs_1.writeFileSync)(obsPath, String(data.kill));
+    (0, fs_1.writeFileSync)(obsPath, `残り${data.kill}キル`);
+    (0, fs_1.writeFileSync)(countPath, String(data.kill));
 }
 // init実行
 init();

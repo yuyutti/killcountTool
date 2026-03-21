@@ -21,6 +21,7 @@ function getPaths() {
     return {
         storePath: join(dir, "store.json"),
         obsPath: join(dir, "kill.txt"),
+        countPath: join(dir, "killcount.txt"),
     };
 }
 
@@ -35,11 +36,12 @@ const defaultData: Store = {
 };
 
 function load(): Store {
-    const { storePath, obsPath } = getPaths();
+    const { storePath, obsPath, countPath } = getPaths();
 
     if (!existsSync(storePath)) {
         writeFileSync(storePath, JSON.stringify(defaultData));
-        writeFileSync(obsPath, String(defaultData.kill));
+        writeFileSync(obsPath, `残り${defaultData.kill}キル`);
+        writeFileSync(countPath, String(defaultData.kill));
         return defaultData;
     }
 
@@ -50,7 +52,9 @@ function load(): Store {
             data.rate = 10;
         }
 
-        writeFileSync(obsPath, String(data.kill));
+        writeFileSync(obsPath, `残り${data.kill}キル`);
+        writeFileSync(countPath, String(data.kill));
+
         return data;
     } catch {
         return defaultData;
@@ -58,10 +62,11 @@ function load(): Store {
 }
 
 function save(data: Store) {
-    const { storePath, obsPath } = getPaths();
+    const { storePath, obsPath, countPath } = getPaths();
 
     writeFileSync(storePath, JSON.stringify(data));
-    writeFileSync(obsPath, String(data.kill));
+    writeFileSync(obsPath, `残り${data.kill}キル`);
+    writeFileSync(countPath, String(data.kill));
 }
 
 // init実行
