@@ -30,7 +30,10 @@
 4. 「ドキュメント」→「killCountTool」を開く
 5. 「kill.txt」を開く
 
-<video src="./readmeAsset/output.mp4" controls></video>
+[![Watch the video](https://img.youtube.com/vi/5Lbg-Q8XlCs/hqdefault.jpg)](https://www.youtube.com/embed/5Lbg-Q8XlCs)
+
+[<img src="https://img.youtube.com/vi/5Lbg-Q8XlCs/hqdefault.jpg" width="600" height="300"
+/>](https://www.youtube.com/embed/5Lbg-Q8XlCs)
 
 ## kill.txtの場所
 
