@@ -28,11 +28,13 @@ function getPaths() {
 type Store = {
     kill: number;
     rate: number;
+    unitLabel: string;
 };
 
 const defaultData: Store = {
     kill: 0,
     rate: 10,
+    unitLabel: "キル",
 };
 
 function load(): Store {
@@ -40,9 +42,9 @@ function load(): Store {
 
     if (!existsSync(storePath)) {
         writeFileSync(storePath, JSON.stringify(defaultData));
-        writeFileSync(obsPath, `残り${defaultData.kill}キル`);
+        writeFileSync(obsPath, `残り${defaultData.kill}${defaultData.unitLabel}`);
         writeFileSync(countPath, String(defaultData.kill));
-        return defaultData;
+        return { ...defaultData };
     }
 
     try {
@@ -51,13 +53,16 @@ function load(): Store {
         if (typeof data.rate !== "number") {
             data.rate = 10;
         }
+        if (typeof data.unitLabel !== "string" || data.unitLabel.trim() === "") {
+            data.unitLabel = "キル";
+        }
 
-        writeFileSync(obsPath, `残り${data.kill}キル`);
+        writeFileSync(obsPath, `残り${data.kill}${data.unitLabel}`);
         writeFileSync(countPath, String(data.kill));
 
         return data;
     } catch {
-        return defaultData;
+        return { ...defaultData };
     }
 }
 
@@ -65,7 +70,7 @@ function save(data: Store) {
     const { storePath, obsPath, countPath } = getPaths();
 
     writeFileSync(storePath, JSON.stringify(data));
-    writeFileSync(obsPath, `残り${data.kill}キル`);
+    writeFileSync(obsPath, `残り${data.kill}${data.unitLabel}`);
     writeFileSync(countPath, String(data.kill));
 }
 
@@ -75,10 +80,18 @@ init();
 contextBridge.exposeInMainWorld("api", {
     getKill: () => load().kill,
     getRate: () => load().rate,
+    getUnitLabel: () => load().unitLabel,
 
     setRate: (v: number) => {
         const data = load();
         data.rate = v;
+        save(data);
+    },
+
+    setUnitLabel: (v: string) => {
+        const label = v.trim() || "キル";
+        const data = load();
+        data.unitLabel = label;
         save(data);
     },
 

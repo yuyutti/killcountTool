@@ -1,6 +1,6 @@
 {
     "name": "kill-count-tool",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "description": "Simple kill counter tool for streamers",
     "author": "yuyutti",
     "main": "main/index.js",

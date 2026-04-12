@@ -10,7 +10,7 @@
     <div class="max-w-md mx-auto">
 
         <!-- タイトル -->
-        <h2 class="text-lg font-semibold">残りキル数</h2>
+        <h2 id="killTitle" class="text-lg font-semibold">残りキル数</h2>
         <h1 id="kill" class="text-4xl font-bold tracking-wide mt-2">0</h1>
 
         <!-- 説明 -->
@@ -29,7 +29,10 @@
             <input id="input" type="text" placeholder="0"
                 class="w-28 h-7 text-center text-sm px-2 rounded-md bg-zinc-800 border border-zinc-700 focus:outline-none focus:border-blue-400" />
 
-            <span class="text-sm">キル</span>
+            <input id="unitLabelInput" type="text" maxlength="10"
+                class="h-7 text-center text-sm px-0 bg-transparent border-b border-transparent bg-zinc-900 focus:border-blue-400 focus:outline-none cursor-text" />
+            <span id="unitLabelSizer" aria-hidden="true"
+                style="position:fixed; visibility:hidden; white-space:pre; font-size:0.875rem; pointer-events:none; top:0; left:0;"></span>
         </div>
 
         <!-- 反映ボタン -->
@@ -47,29 +50,29 @@
         <!-- スパチャ換算 -->
         <div class="mt-8 border-t border-zinc-700 pt-5">
 
-            <p class="text-xs text-zinc-400 mb-2">
+            <p id="moneyDesc" class="text-xs text-zinc-400 mb-2">
                 金額からキル数を計算
             </p>
 
-<div class="flex items-center justify-center gap-2">
+            <div class="flex items-center justify-center gap-2">
 
-    <!-- 金額 -->
-    <div class="relative">
-        <input id="moneyInput" type="text" placeholder="金額"
-            class="w-24 h-7 text-center text-sm px-2 pr-6 rounded-md bg-zinc-800 border border-zinc-700 focus:outline-none focus:border-blue-400" />
-        
-        <span class="absolute right-2 top-1/2 -translate-y-1/2 text-xs text-zinc-400">
-            円
-        </span>
-    </div>
+                <!-- 金額 -->
+                <div class="relative">
+                    <input id="moneyInput" type="text" placeholder="金額"
+                        class="w-24 h-7 text-center text-sm px-2 pr-6 rounded-md bg-zinc-800 border border-zinc-700 focus:outline-none focus:border-blue-400" />
+                    
+                    <span class="absolute right-2 top-1/2 -translate-y-1/2 text-xs text-zinc-400">
+                        円
+                    </span>
+                </div>
 
-    <span class="text-xs text-zinc-400">÷</span>
+                <span class="text-xs text-zinc-400">÷</span>
 
-    <!-- 単価 -->
-    <input id="rateInput" type="text" placeholder="1キルの値段"
-        class="w-24 h-7 text-center text-sm px-2 rounded-md bg-zinc-800 border border-zinc-700 focus:outline-none focus:border-blue-400" />
+                <!-- 単価 -->
+                <input id="rateInput" type="text" placeholder="1キルの値段"
+                    class="w-24 h-7 text-center text-sm px-2 rounded-md bg-zinc-800 border border-zinc-700 focus:outline-none focus:border-blue-400" />
 
-</div>
+            </div>
 
             <div class="mt-3">
                 <button id="moneyBtn" onclick="applyMoney()"

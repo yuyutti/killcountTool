@@ -23,32 +23,36 @@ function getPaths() {
 const defaultData = {
     kill: 0,
     rate: 10,
+    unitLabel: "キル",
 };
 function load() {
     const { storePath, obsPath, countPath } = getPaths();
     if (!(0, fs_1.existsSync)(storePath)) {
         (0, fs_1.writeFileSync)(storePath, JSON.stringify(defaultData));
-        (0, fs_1.writeFileSync)(obsPath, `残り${defaultData.kill}キル`);
+        (0, fs_1.writeFileSync)(obsPath, `残り${defaultData.kill}${defaultData.unitLabel}`);
         (0, fs_1.writeFileSync)(countPath, String(defaultData.kill));
-        return defaultData;
+        return Object.assign({}, defaultData);
     }
     try {
         const data = JSON.parse((0, fs_1.readFileSync)(storePath, "utf-8"));
         if (typeof data.rate !== "number") {
             data.rate = 10;
         }
-        (0, fs_1.writeFileSync)(obsPath, `残り${data.kill}キル`);
+        if (typeof data.unitLabel !== "string" || data.unitLabel.trim() === "") {
+            data.unitLabel = "キル";
+        }
+        (0, fs_1.writeFileSync)(obsPath, `残り${data.kill}${data.unitLabel}`);
         (0, fs_1.writeFileSync)(countPath, String(data.kill));
         return data;
     }
     catch (_a) {
-        return defaultData;
+        return Object.assign({}, defaultData);
     }
 }
 function save(data) {
     const { storePath, obsPath, countPath } = getPaths();
     (0, fs_1.writeFileSync)(storePath, JSON.stringify(data));
-    (0, fs_1.writeFileSync)(obsPath, `残り${data.kill}キル`);
+    (0, fs_1.writeFileSync)(obsPath, `残り${data.kill}${data.unitLabel}`);
     (0, fs_1.writeFileSync)(countPath, String(data.kill));
 }
 // init実行
@@ -56,9 +60,16 @@ init();
 electron_1.contextBridge.exposeInMainWorld("api", {
     getKill: () => load().kill,
     getRate: () => load().rate,
+    getUnitLabel: () => load().unitLabel,
     setRate: (v) => {
         const data = load();
         data.rate = v;
+        save(data);
+    },
+    setUnitLabel: (v) => {
+        const label = v.trim() || "キル";
+        const data = load();
+        data.unitLabel = label;
         save(data);
     },
     setKill: (v) => {
